@@ -194,6 +194,8 @@ endif()
 #########################
 if(IF97_FLAG)
     message(STATUS "[${PROJECT_NAME}] - Stand-alone IF97 Test.")
-    add_executable(IF97 "${CMAKE_CURRENT_SOURCE_DIR}/IF97.cpp")
+    find_package(pybind11 REQUIRED)
+    pybind11_add_module(IF97 "${CMAKE_CURRENT_SOURCE_DIR}/IF97.cpp")
+#    add_executable(IF97 "${CMAKE_CURRENT_SOURCE_DIR}/IF97.cpp")
 endif()
 
