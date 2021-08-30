@@ -15,6 +15,7 @@ namespace py = pybind11;
 
 PYBIND11_MODULE(IF97, m) {
     m.doc() = "IF97 cpp code";
-    m.def("rhomass_Tp", &IF97::rhomass_Tp, py::arg("T"), py::arg("p"), "calculate rho using given T and p");
-    m.def("hmass_Tp", &IF97::hmass_Tp, py::arg("T"), py::arg("p"), "calculate H using given T and p");
+    m.def("rhomass_Tp", &IF97::rhomass_Tp, py::arg("T"), py::arg("p"), "calculate rho using given T and p, p:Mpa, T:K, rho:kg/m^3");
+    m.def("hmass_Tp", &IF97::hmass_Tp, py::arg("T"), py::arg("p"), "calculate H using given T and p, p:Mpa, T:K, rho:kg/m^3");
+    m.def("T_phmass", &IF97::T_phmass, py::arg("p"), py::arg("h"), "calculate T using given p and H, p:Mpa, T:K, rho:kg/m^3");
 }
