@@ -13,9 +13,37 @@ using namespace std;
 namespace py = pybind11;
 
 
+double FtoK(double F) {
+    auto K = (F - 32) / 1.8 + 273.15;
+    return K;
+}
+
+double KtoF(double K) {
+    auto F = (K - 273.15) * 1.8 + 32;
+    return F;
+}
+
+double rhomass_Tp(double T, double p) {
+    auto rho = IF97::rhomass_Tp(FtoK(T), p);
+    return rho;
+}
+
+double hmass_Tp(double T, double p) {
+    auto h = IF97::hmass_Tp(FtoK(T), p);
+    return h;
+}
+
+double T_phmass(double p, double h) {
+    auto T = IF97::T_phmass(p, h);
+    return KtoF(T);
+}
+
 PYBIND11_MODULE(IF97, m) {
     m.doc() = "IF97 cpp code";
-    m.def("rhomass_Tp", &IF97::rhomass_Tp, py::arg("T"), py::arg("p"), "calculate rho using given T and p, p:Mpa, T:K, rho:kg/m^3");
-    m.def("hmass_Tp", &IF97::hmass_Tp, py::arg("T"), py::arg("p"), "calculate H using given T and p, p:Mpa, T:K, rho:kg/m^3");
-    m.def("T_phmass", &IF97::T_phmass, py::arg("p"), py::arg("h"), "calculate T using given p and H, p:Mpa, T:K, rho:kg/m^3");
+    m.def("rhomass_Tp", &rhomass_Tp, py::arg("T"), py::arg("p"),
+          "calculate rho using given T and p, p:Mpa, T:F, rho:kg/m^3");
+    m.def("hmass_Tp", &hmass_Tp, py::arg("T"), py::arg("p"),
+          "calculate H using given T and p, p:Mpa, T:F, rho:kg/m^3");
+    m.def("T_phmass", &T_phmass, py::arg("p"), py::arg("h"),
+          "calculate T using given p and H, p:Mpa, T:F, rho:kg/m^3");
 }
